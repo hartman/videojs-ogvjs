@@ -1,0 +1,15 @@
+{
+  "name": "videojs-ogvjs",
+  "version": "0.0.0",
+  "author": "Derk-Jan Hartman",
+  "license": "MIT",
+  "main": [
+    "dist/videojs-ogvjs.css",
+    "dist/videojs-ogvjs.min.js"
+  ],
+  "keywords": [
+    "videojs",
+    "videojs-plugin"
+  ]
+}
+
