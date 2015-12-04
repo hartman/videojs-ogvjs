@@ -1,6 +1,14 @@
 # videojs-ogvjs
 
-A plugin for video.js. 
+A [Video.js](https://www.videojs.com) Tech plugin for [Ogv.js](https://github.com/brion/ogv.js/).
+
+
+NOT READY FOR USAGE.
+This module is still under development. It is NOT ready, should NOT be published to npm in its current form etc. etc. etc.
+
+With this module, you can playback Ogg Vorbis/Theora file with the VideoJS player on browsers that do no support this format.
+
+Many thanks to the great work of the Video.js developers and to Brion Vibber for his relentless efforts to bring unencumbered video to the entire world.
 
 ### Table of Contents
 
@@ -37,4 +45,4 @@ That's it! Refer to the [video.js plugin standards](https://github.com/videojs/g
 
 ## License
 
-MIT
+MIT and Apache-2.0
