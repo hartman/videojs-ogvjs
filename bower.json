@@ -4,7 +4,6 @@
   "author": "Derk-Jan Hartman",
   "license": "MIT",
   "main": [
-    "dist/videojs-ogvjs.css",
     "dist/videojs-ogvjs.min.js"
   ],
   "keywords": [

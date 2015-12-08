@@ -36,9 +36,6 @@
   "scripts": {
     "prebuild": "npm run clean",
     "build": "npm-run-all -p build:*",
-    "build:css": "npm-run-all mkdirs build:css:sass build:css:bannerize",
-    "build:css:bannerize": "bannerize dist/videojs-ogvjs.css --banner=scripts/banner.ejs",
-    "build:css:sass": "node-sass --output-style=compressed --linefeed=lf src/plugin.scss -o dist &&  mv dist/plugin.css dist/videojs-ogvjs.css",
     "build:js": "npm-run-all mkdirs build:js:babel build:js:browserify build:js:bannerize build:js:uglify",
     "build:js:babel": "babel src -d es5",
     "build:js:bannerize": "bannerize dist/videojs-ogvjs.js --banner=scripts/banner.ejs",
@@ -62,7 +59,6 @@
     "version": "./scripts/npm-version.sh",
     "postversion": "./scripts/npm-postversion.sh",
     "watch": "npm run mkdirs && npm-run-all -p watch:*",
-    "watch:css": "node-sass --output-style=nested --linefeed=lf src/plugin.scss -o dist -w src && mv dist/plugin.css dist/videojs-ogvjs.css",
     "watch:js": "watchify src/plugin.js -t babelify -v -o dist/videojs-ogvjs.js",
     "watch:test": "watchify `find test -name '*.test.js'` -t babelify -o dist-test/videojs-ogvjs.js"
   },
