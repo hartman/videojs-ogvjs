@@ -569,12 +569,17 @@ class OgvJs extends Tech {
  *
  * @return {Boolean}
  */
-OgvJs.isSupported = function(){
-  return true;
+OgvJs.isSupported = function (){
+  return OGVCompat.supported( 'OGVPlayer' );
 };
 
-OgvJs.canPlaySource = function(e) {
-    return (e.type.indexOf( 'ogg' ) !== -1 );
+/*
+   * Check if the tech can support the given source
+   * @param  {Object} srcObj  The source object
+   * @return {String}         'probably', 'maybe', or '' (empty string)
+   */
+OgvJs.canPlaySource = function (srcObj) {
+    return (srcObj.type.indexOf( '/ogg' ) !== -1 ) ? 'maybe' : '';
 };
 
 /*
@@ -584,7 +589,7 @@ OgvJs.canPlaySource = function(e) {
  *
  * @return {Boolean}
  */
-OgvJs.canControlVolume = function(){
+OgvJs.canControlVolume = function (){
   return false;
 };
 
@@ -593,7 +598,7 @@ OgvJs.canControlVolume = function(){
  *
  * @return {Number} [description]
  */
-OgvJs.canControlPlaybackRate = function(){
+OgvJs.canControlPlaybackRate = function (){
   return false;
 };
 
