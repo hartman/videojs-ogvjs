@@ -1,8 +1,5 @@
 import videojs from 'video.js';
-// import Tech from 'video.js';
-// import Component from 'video.js';
 const Tech = videojs.getComponent('Tech');
-const Component = videojs.getComponent('Component');
 
 /**
  * OgvJs Media Controller - Wrapper for OgvJs Media API
@@ -16,8 +13,6 @@ class OgvJs extends Tech {
 
   constructor(options, ready){
     super(options, ready);
-
-    const source = options.source;
 
     this.triggerReady();
   }
