@@ -20,7 +20,10 @@
   <script src="/dist/videojs-ogvjs.js"></script>
   <script>
     (function(window, videojs) {
-      var player = window.player = videojs('videojs-ogvjs-player', { techOrder: [ 'OgvJs' ] } );
+      var player = videojs('videojs-ogvjs-player', {
+        techOrder: [ 'ogvjs' ],
+        ogvjs: { base: '/ogv.js' }
+      } );
     }(window, window.videojs));
   </script>
 </body>

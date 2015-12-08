@@ -1,15 +1,15 @@
 import videojs from 'video.js';
 const Tech = videojs.getComponent('Tech');
-
+const Component = videojs.getComponent('Component');
 /**
- * OgvJs Media Controller - Wrapper for OgvJs Media API
+ * Ogvjs Media Controller - Wrapper for Ogvjs Media API
  *
  * @param {Object=} options Object of option names and values
  * @param {Function=} ready Ready callback function
  * @extends Tech
- * @class OgvJs
+ * @class Ogvjs
  */
-class OgvJs extends Tech {
+class Ogvjs extends Tech {
 
   constructor(options, ready){
     super(options, ready);
@@ -18,12 +18,12 @@ class OgvJs extends Tech {
   }
 
   /**
-   * Dispose of OgvJs media element
+   * Dispose of Ogvjs media element
    *
    * @method dispose
    */
   dispose() {
-    //OgvJs.disposeMediaElement(this.el_);
+    //Ogvjs.disposeMediaElement(this.el_);
     super.dispose();
   }
 
@@ -34,10 +34,13 @@ class OgvJs extends Tech {
    * @method createEl
    */
   createEl() {
-    // set the base, get this from options
-    OGVLoader.base = '/ogv.js';
+    let options = this.options_;
+    if(options.base) {
+      // set the base, get this from options
+      OGVLoader.base = '/ogv.js';
+    }
 
-    let el = new OGVPlayer();
+    let el = new OGVPlayer(options);
     // simulate timeupdate events, needed for subtitles
     // @todo switch this to native timeupdate event when available upstream
     this.lastTime = 0;
@@ -55,7 +58,7 @@ class OgvJs extends Tech {
     if ( Math.abs( now - this.lastTime ) >= timeupdateInterval ) {
             this.lastTime = now;
             this.trigger( 'timeupdate' );
-            this.trigger('durationchange');
+            this.trigger( 'durationchange' );
     }
   }
 
@@ -142,21 +145,21 @@ class OgvJs extends Tech {
   }
 
   /**
-   * Play for OgvJs tech
+   * Play for Ogvjs tech
    *
    * @method play
    */
   play() { this.el_.play(); }
 
   /**
-   * Pause for OgvJs tech
+   * Pause for Ogvjs tech
    *
    * @method pause
    */
   pause() { this.el_.pause(); }
 
   /**
-   * Paused for OgvJs tech
+   * Paused for Ogvjs tech
    *
    * @return {Boolean}
    * @method paused
@@ -565,11 +568,11 @@ class OgvJs extends Tech {
 }
 
 /*
- * Check if OgvJs video is supported by this browser/device
+ * Check if Ogvjs video is supported by this browser/device
  *
  * @return {Boolean}
  */
-OgvJs.isSupported = function (){
+Ogvjs.isSupported = function (){
   return OGVCompat.supported( 'OGVPlayer' );
 };
 
@@ -578,7 +581,7 @@ OgvJs.isSupported = function (){
    * @param  {Object} srcObj  The source object
    * @return {String}         'probably', 'maybe', or '' (empty string)
    */
-OgvJs.canPlaySource = function (srcObj) {
+Ogvjs.canPlaySource = function (srcObj) {
     return (srcObj.type.indexOf( '/ogg' ) !== -1 ) ? 'maybe' : '';
 };
 
@@ -589,7 +592,7 @@ OgvJs.canPlaySource = function (srcObj) {
  *
  * @return {Boolean}
  */
-OgvJs.canControlVolume = function (){
+Ogvjs.canControlVolume = function (){
   return false;
 };
 
@@ -598,7 +601,7 @@ OgvJs.canControlVolume = function (){
  *
  * @return {Number} [description]
  */
-OgvJs.canControlPlaybackRate = function (){
+Ogvjs.canControlPlaybackRate = function (){
   return false;
 };
 
@@ -607,17 +610,17 @@ OgvJs.canControlPlaybackRate = function (){
  *
  * @return {Boolean}
  */
-OgvJs.supportsNativeTextTracks = function() {
+Ogvjs.supportsNativeTextTracks = function() {
   return false;
 };
 
 /**
- * An array of events available on the OgvJs tech.
+ * An array of events available on the Ogvjs tech.
  *
  * @private
  * @type {Array}
  */
-OgvJs.Events = [
+Ogvjs.Events = [
   'loadstart',
   'suspend',
   'abort',
@@ -647,36 +650,36 @@ OgvJs.Events = [
  *
  * @type {Boolean}
  */
-OgvJs.prototype['featuresVolumeControl'] = OgvJs.canControlVolume();
+Ogvjs.prototype['featuresVolumeControl'] = Ogvjs.canControlVolume();
 
 /*
  * Set the tech's playbackRate support status
  *
  * @type {Boolean}
  */
-OgvJs.prototype['featuresPlaybackRate'] = OgvJs.canControlPlaybackRate();
+Ogvjs.prototype['featuresPlaybackRate'] = Ogvjs.canControlPlaybackRate();
 
 /*
  * Set the the tech's fullscreen resize support status.
  * HTML video is able to automatically resize when going to fullscreen.
  * (No longer appears to be used. Can probably be removed.)
  */
-OgvJs.prototype['featuresFullscreenResize'] = true;
+Ogvjs.prototype['featuresFullscreenResize'] = true;
 
 /*
  * Set the tech's progress event support status
  * (this disables the manual progress events of the Tech)
  */
-OgvJs.prototype['featuresProgressEvents'] = true;
+Ogvjs.prototype['featuresProgressEvents'] = true;
 
 /*
  * Sets the tech's status on native text track support
  *
  * @type {Boolean}
  */
-OgvJs.prototype['featuresNativeTextTracks'] = OgvJs.supportsNativeTextTracks();
+Ogvjs.prototype['featuresNativeTextTracks'] = Ogvjs.supportsNativeTextTracks();
 
-OgvJs.disposeMediaElement = function(el){
+Ogvjs.disposeMediaElement = function(el){
   if (!el) { return; }
 
   if (el.parentNode) {
@@ -706,6 +709,6 @@ OgvJs.disposeMediaElement = function(el){
   }
 };
 
-Tech.registerTech('OgvJs', OgvJs);
-export default OgvJs;
+Tech.registerTech('Ogvjs', Ogvjs);
+export default Ogvjs;
 
