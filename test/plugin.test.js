@@ -14,45 +14,45 @@ QUnit.test('the environment is sane', function(assert) {
   assert.strictEqual(typeof videojs, 'function', 'videojs exists');
 });
 
-QUnit.module('videojs-ogvjs', {
+// // QUnit.module('videojs-ogvjs', {
 
-  beforeEach() {
-    this.fixture = document.getElementById('qunit-fixture');
-    this.video = document.createElement('video');
-    this.fixture.appendChild(this.video);
-    this.player = new Player();
+// //   beforeEach() {
+// //     this.fixture = document.getElementById('qunit-fixture');
+// //     this.video = document.createElement('video');
+// //     this.fixture.appendChild(this.video);
+// //     this.player = new Player();
 
-    // Mock the environment's timers because certain things - particularly
-    // player readiness - are asynchronous in video.js 5.
-    this.clock = sinon.useFakeTimers();
-  },
+// //     // Mock the environment's timers because certain things - particularly
+// //     // player readiness - are asynchronous in video.js 5.
+// //     this.clock = sinon.useFakeTimers();
+// //   },
 
-  afterEach() {
-    this.player.dispose();
-    this.clock.restore();
-  }
-});
+// //   afterEach() {
+// //     this.player.dispose();
+// //     this.clock.restore();
+// //   }
+// // });
 
-QUnit.test('registers itself with video.js', function(assert) {
-  assert.ok(
-    typeof plugin,
-    'function',
-    'videojs-ogvjs plugin is a function'
-  );
+// QUnit.test('registers itself with video.js', function(assert) {
+//   assert.ok(
+//     typeof videojs.getTech('Ogvjs'),
+//     'function',
+//     'videojs-ogvjs plugin is a function'
+//   );
 
-  assert.strictEqual(
-    Player.prototype.ogvjs,
-    plugin,
-    'videojs-ogvjs plugin was registered'
-  );
+//   assert.strictEqual(
+//     Player.prototype.ogvjs,
+//     plugin,
+//     'videojs-ogvjs plugin was registered'
+//   );
 
-  this.player.ogvjs();
+//   this.player.ogvjs();
 
-  // Tick the clock forward enough to trigger the player to be "ready".
-  this.clock.tick(1);
+//   // Tick the clock forward enough to trigger the player to be "ready".
+//   this.clock.tick(1);
 
-  assert.ok(
-    this.player.hasClass('vjs-ogvjs'),
-    'the plugin adds a class to the player'
-  );
-});
+//   assert.ok(
+//     this.player.hasClass('vjs-ogvjs'),
+//     'the plugin adds a class to the player'
+//   );
+// });
