@@ -29,6 +29,7 @@
       "dist-test",
       "docs",
       "es5",
+      "ogv.js",
       "test/karma",
       "scripts"
     ]
