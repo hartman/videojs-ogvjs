@@ -4,7 +4,7 @@
 
 A [Video.js](https://www.videojs.com) Tech plugin for [Ogv.js](https://github.com/brion/ogv.js/).
 
-With this module, you can playback Ogg Vorbis/Theora file with the VideoJS player on browsers that do no support this format.
+With this module, you can playback Ogg Vorbis/Theora file with the VideoJS player on browsers that do not support this format, like Safari and Internet Explorer.
 
 Many thanks to the great work of the Video.js developers and to Brion Vibber for his relentless efforts to bring unencumbered video to the entire world.
 
