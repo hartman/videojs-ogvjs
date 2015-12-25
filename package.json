@@ -21,7 +21,10 @@
   "browserify-shim": {
     "qunit": "global:QUnit",
     "sinon": "global:sinon",
-    "video.js": "global:videojs"
+    "video.js": "global:videojs",
+    "OGVLoader": "global:OGVLoader",
+    "OGVPlayer": "global:OGVPlayer",
+    "OGVCompat": "global:OGVCompat"
   },
   "vjsstandard": {
     "ignore": [

@@ -1,6 +1,9 @@
 import videojs from 'video.js';
+import OGVCompat from 'OGVCompat';
+import OGVLoader from 'OGVLoader';
+import OGVPlayer from 'OGVPlayer';
 const Tech = videojs.getComponent('Tech');
-const Component = videojs.getComponent('Component');
+
 /**
  * Ogvjs Media Controller - Wrapper for Ogvjs Media API
  *
@@ -11,7 +14,7 @@ const Component = videojs.getComponent('Component');
  */
 class Ogvjs extends Tech {
 
-  constructor(options, ready){
+  constructor(options, ready) {
     super(options, ready);
 
     this.triggerReady();
@@ -23,7 +26,7 @@ class Ogvjs extends Tech {
    * @method dispose
    */
   dispose() {
-    //Ogvjs.disposeMediaElement(this.el_);
+    // Ogvjs.disposeMediaElement(this.el_);
     super.dispose();
   }
 
@@ -35,16 +38,18 @@ class Ogvjs extends Tech {
    */
   createEl() {
     let options = this.options_;
-    if(options.base) {
+
+    if (options.base) {
       // set the base, get this from options
       OGVLoader.base = '/ogv.js';
     }
 
     let el = new OGVPlayer(options);
+
     // simulate timeupdate events, needed for subtitles
     // @todo switch this to native timeupdate event when available upstream
     this.lastTime = 0;
-    el.addEventListener( 'framecallback', this.onFrameUpdate.bind(this) );
+    el.addEventListener('framecallback', this.onFrameUpdate.bind(this));
     el.src = this.options_.source.src;
     el.className += ' vjs-tech';
 
@@ -52,13 +57,14 @@ class Ogvjs extends Tech {
   }
 
   onFrameUpdate(event) {
-    var timeupdateInterval = 0.25,
-            now = this.el_ ? this.el_.currentTime : this.lastTime;
+    let timeupdateInterval = 0.25;
+    let now = this.el_ ? this.el_.currentTime : this.lastTime;
+
     // Don't spam time updates on every frame
-    if ( Math.abs( now - this.lastTime ) >= timeupdateInterval ) {
-            this.lastTime = now;
-            this.trigger( 'timeupdate' );
-            this.trigger( 'durationchange' );
+    if (Math.abs(now - this.lastTime) >= timeupdateInterval) {
+      this.lastTime = now;
+      this.trigger('timeupdate');
+      this.trigger('durationchange');
     }
   }
 
@@ -88,8 +94,6 @@ class Ogvjs extends Tech {
       let setLoadstartFired = function() {
         loadstartFired = true;
       };
-      this.on('loadstart', setLoadstartFired);
-
       let triggerLoadstart = function() {
         // We did miss the original loadstart. Make sure the player
         // sees loadstart before loadedmetadata
@@ -97,9 +101,10 @@ class Ogvjs extends Tech {
           this.trigger('loadstart');
         }
       };
-      this.on('loadedmetadata', triggerLoadstart);
 
-      this.ready(function(){
+      this.on('loadstart', setLoadstartFired);
+      this.on('loadedmetadata', triggerLoadstart);
+      this.ready(function() {
         this.off('loadstart', setLoadstartFired);
         this.off('loadedmetadata', triggerLoadstart);
 
@@ -137,8 +142,8 @@ class Ogvjs extends Tech {
     }
 
     // We still need to give the player time to add event listeners
-    this.ready(function(){
-      eventsToTrigger.forEach(function(type){
+    this.ready(function() {
+      eventsToTrigger.forEach(function(type) {
         this.trigger(type);
       }, this);
     });
@@ -149,14 +154,18 @@ class Ogvjs extends Tech {
    *
    * @method play
    */
-  play() { this.el_.play(); }
+  play() {
+    this.el_.play();
+  }
 
   /**
    * Pause for Ogvjs tech
    *
    * @method pause
    */
-  pause() { this.el_.pause(); }
+  pause() {
+    this.el_.pause();
+  }
 
   /**
    * Paused for Ogvjs tech
@@ -164,7 +173,9 @@ class Ogvjs extends Tech {
    * @return {Boolean}
    * @method paused
    */
-  paused() { return this.el_.paused; }
+  paused() {
+    return this.el_.paused;
+  }
 
   /**
    * Get current time
@@ -172,7 +183,9 @@ class Ogvjs extends Tech {
    * @return {Number}
    * @method currentTime
    */
-  currentTime() { return this.el_.currentTime; }
+  currentTime() {
+    return this.el_.currentTime;
+  }
 
   /**
    * Set current time
@@ -183,8 +196,8 @@ class Ogvjs extends Tech {
   setCurrentTime(seconds) {
     try {
       this.el_.currentTime = seconds;
-    } catch(e) {
-      log(e, 'Video is not ready. (Video.js)');
+    } catch (e) {
+      videojs.log(e, 'Video is not ready. (Video.js)');
     }
   }
 
@@ -194,7 +207,9 @@ class Ogvjs extends Tech {
    * @return {Number}
    * @method duration
    */
-  duration() { return this.el_.duration || 0; }
+  duration() {
+    return this.el_.duration || 0;
+  }
 
   /**
    * Get a TimeRange object that represents the intersection
@@ -204,7 +219,9 @@ class Ogvjs extends Tech {
    * @return {TimeRangeObject}
    * @method buffered
    */
-  buffered() { return this.el_.buffered; }
+  buffered() {
+    return this.el_.buffered;
+  }
 
   /**
    * Get volume level
@@ -212,7 +229,9 @@ class Ogvjs extends Tech {
    * @return {Number}
    * @method volume
    */
-  volume() { return this.el_.volume ? this.el_.volume : 1; }
+  volume() {
+    return this.el_.volume ? this.el_.volume : 1;
+  }
 
   /**
    * Set volume level
@@ -221,7 +240,7 @@ class Ogvjs extends Tech {
    * @method setVolume
    */
   setVolume(percentAsDecimal) {
-    if( this.el_.volume ) {
+    if (this.el_.volume) {
       this.el_.volume = percentAsDecimal;
     }
   }
@@ -232,7 +251,9 @@ class Ogvjs extends Tech {
    * @return {Boolean}
    * @method muted
    */
-  muted() { return this.el_.muted ? this.el_.muted : false; }
+  muted() {
+    return this.el_.muted ? this.el_.muted : false;
+  }
 
   /**
    * Set muted
@@ -241,7 +262,7 @@ class Ogvjs extends Tech {
    * @method setMuted
    */
   setMuted(muted) {
-    if( this.el_.muted ) {
+    if (this.el_.muted) {
       this.el_.muted = muted;
     }
   }
@@ -252,7 +273,9 @@ class Ogvjs extends Tech {
    * @return {Number}
    * @method width
    */
-  width() { return this.el_.offsetWidth; }
+  width() {
+    return this.el_.offsetWidth;
+  }
 
   /**
    * Get player height
@@ -260,7 +283,9 @@ class Ogvjs extends Tech {
    * @return {Number}
    * @method height
    */
-  height() {  return this.el_.offsetHeight; }
+  height() {
+    return this.el_.offsetHeight;
+  }
 
   /**
    * Get if there is fullscreen support
@@ -271,8 +296,9 @@ class Ogvjs extends Tech {
   supportsFullScreen() {
     if (typeof this.el_.webkitEnterFullScreen === 'function') {
       let userAgent = window.navigator.userAgent;
+
       // Seems to be broken in Chromium/Chrome && Safari in Leopard
-      if (/Android/.test(userAgent) || !/Chrome|Mac OS X 10.5/.test(userAgent)) {
+      if ((/Android/).test(userAgent) || !(/Chrome|Mac OS X 10.5/).test(userAgent)) {
         return true;
       }
     }
@@ -285,7 +311,7 @@ class Ogvjs extends Tech {
    * @method enterFullScreen
    */
   enterFullScreen() {
-    var video = this.el_;
+    let video = this.el_;
 
     if ('webkitDisplayingFullscreen' in video) {
       this.one('webkitbeginfullscreen', function() {
@@ -304,7 +330,7 @@ class Ogvjs extends Tech {
 
       // playing and pausing synchronously during the transition to fullscreen
       // can get iOS ~6.1 devices into a play/pause loop
-      this.setTimeout(function(){
+      this.setTimeout(function() {
         video.pause();
         video.webkitEnterFullScreen();
       }, 0);
@@ -332,10 +358,9 @@ class Ogvjs extends Tech {
   src(src) {
     if (src === undefined) {
       return this.el_.src;
-    } else {
-      // Setting src through `src` instead of `setSrc` will be deprecated
-      this.setSrc(src);
     }
+    // Setting src through `src` instead of `setSrc` will be deprecated
+    this.setSrc(src);
   }
 
   /**
@@ -354,7 +379,7 @@ class Ogvjs extends Tech {
    *
    * @method load
    */
-  load(){
+  load() {
     this.el_.load();
   }
 
@@ -367,9 +392,8 @@ class Ogvjs extends Tech {
   currentSrc() {
     if (this.currentSource_) {
       return this.currentSource_.src;
-    } else {
-      return this.el_.currentSrc;
     }
+    return this.el_.currentSrc;
   }
 
   /**
@@ -378,7 +402,9 @@ class Ogvjs extends Tech {
    * @return {String}
    * @method poster
    */
-  poster() { return this.el_.poster; }
+  poster() {
+    return this.el_.poster;
+  }
 
   /**
    * Set poster
@@ -386,7 +412,9 @@ class Ogvjs extends Tech {
    * @param {String} val URL to poster image
    * @method
    */
-  setPoster(val) { this.el_.poster = val; }
+  setPoster(val) {
+    this.el_.poster = val;
+  }
 
   /**
    * Get preload attribute
@@ -394,7 +422,7 @@ class Ogvjs extends Tech {
    * @return {String}
    * @method preload
    */
-  //preload() { return this.el_.preload; }
+  // preload() { return this.el_.preload; }
 
   /**
    * Set preload attribute
@@ -402,7 +430,7 @@ class Ogvjs extends Tech {
    * @param {String} val Value for preload attribute
    * @method setPreload
    */
-  //setPreload(val) { this.el_.preload = val; }
+  // setPreload(val) { this.el_.preload = val; }
 
   /**
    * Get autoplay attribute
@@ -410,7 +438,7 @@ class Ogvjs extends Tech {
    * @return {String}
    * @method autoplay
    */
-  //autoplay() { return this.el_.autoplay; }
+  // autoplay() { return this.el_.autoplay; }
 
   /**
    * Set autoplay attribute
@@ -418,7 +446,7 @@ class Ogvjs extends Tech {
    * @param {String} val Value for preload attribute
    * @method setAutoplay
    */
-  //setAutoplay(val) { this.el_.autoplay = val; }
+  // setAutoplay(val) { this.el_.autoplay = val; }
 
   /**
    * Get controls attribute
@@ -426,7 +454,9 @@ class Ogvjs extends Tech {
    * @return {String}
    * @method controls
    */
-  controls() { return this.el_.controls; }
+  controls() {
+    return this.el_.controls;
+  }
 
   /**
    * Set controls attribute
@@ -434,7 +464,9 @@ class Ogvjs extends Tech {
    * @param {String} val Value for controls attribute
    * @method setControls
    */
-  setControls(val) { this.el_.controls = !!val; }
+  setControls(val) {
+    this.el_.controls = !!val;
+  }
 
   /**
    * Get loop attribute
@@ -442,7 +474,7 @@ class Ogvjs extends Tech {
    * @return {String}
    * @method loop
    */
-  //loop() { return this.el_.loop; }
+  // loop() { return this.el_.loop; }
 
   /**
    * Set loop attribute
@@ -450,7 +482,7 @@ class Ogvjs extends Tech {
    * @param {String} val Value for loop attribute
    * @method setLoop
    */
-  //setLoop(val) { this.el_.loop = val; }
+  // setLoop(val) { this.el_.loop = val; }
 
   /**
    * Get error value
@@ -458,7 +490,9 @@ class Ogvjs extends Tech {
    * @return {String}
    * @method error
    */
-  error() { return this.el_.error; }
+  error() {
+    return this.el_.error;
+  }
 
   /**
    * Get whether or not the player is in the "seeking" state
@@ -466,7 +500,9 @@ class Ogvjs extends Tech {
    * @return {Boolean}
    * @method seeking
    */
-  seeking() { return this.el_.seeking; }
+  seeking() {
+    return this.el_.seeking;
+  }
 
   /**
    * Get a TimeRanges object that represents the
@@ -476,7 +512,9 @@ class Ogvjs extends Tech {
    * @return {TimeRangeObject}
    * @method seekable
    */
-  seekable() { return this.el_.seekable; }
+  seekable() {
+    return this.el_.seekable;
+  }
 
   /**
    * Get if video ended
@@ -484,7 +522,9 @@ class Ogvjs extends Tech {
    * @return {Boolean}
    * @method ended
    */
-  ended() { return this.el_.ended; }
+  ended() {
+    return this.el_.ended;
+  }
 
   /**
    * Get the value of the muted content attribute
@@ -494,7 +534,7 @@ class Ogvjs extends Tech {
    * @return {Boolean}
    * @method defaultMuted
    */
-  //defaultMuted() { return this.el_.defaultMuted; }
+  // defaultMuted() { return this.el_.defaultMuted; }
 
   /**
    * Get desired speed at which the media resource is to play
@@ -502,7 +542,7 @@ class Ogvjs extends Tech {
    * @return {Number}
    * @method playbackRate
    */
-  //playbackRate() { return this.el_.playbackRate; }
+  // playbackRate() { return this.el_.playbackRate; }
 
   /**
    * Returns a TimeRanges object that represents the ranges of the
@@ -511,7 +551,7 @@ class Ogvjs extends Tech {
    * timeline that has been reached through normal playback
    * @see https://html.spec.whatwg.org/multipage/embedded-content.html#dom-media-played
    */
-  //played() { return this.el_.played; }
+  // played() { return this.el_.played; }
 
   /**
    * Set desired speed at which the media resource is to play
@@ -519,7 +559,7 @@ class Ogvjs extends Tech {
    * @param {Number} val Speed at which the media resource is to play
    * @method setPlaybackRate
    */
-  //setPlaybackRate(val) { this.el_.playbackRate = val; }
+  // setPlaybackRate(val) { this.el_.playbackRate = val; }
 
   /**
    * Get the current state of network activity for the element, from
@@ -532,7 +572,7 @@ class Ogvjs extends Tech {
    * @return {Number}
    * @method networkState
    */
-  //networkState() { return this.el_.networkState; }
+  // networkState() { return this.el_.networkState; }
 
   /**
    * Get a value that expresses the current state of the element
@@ -547,7 +587,7 @@ class Ogvjs extends Tech {
    * @return {Number}
    * @method readyState
    */
-  //readyState() { return this.el_.readyState; }
+  // readyState() { return this.el_.readyState; }
 
   /**
    * Get width of video
@@ -555,7 +595,9 @@ class Ogvjs extends Tech {
    * @return {Number}
    * @method videoWidth
    */
-  videoWidth() { return this.el_.videoWidth; }
+  videoWidth() {
+    return this.el_.videoWidth;
+  }
 
   /**
    * Get height of video
@@ -563,7 +605,9 @@ class Ogvjs extends Tech {
    * @return {Number}
    * @method videoHeight
    */
-  videoHeight() { return this.el_.videoHeight; }
+  videoHeight() {
+    return this.el_.videoHeight;
+  }
 
 }
 
@@ -572,8 +616,8 @@ class Ogvjs extends Tech {
  *
  * @return {Boolean}
  */
-Ogvjs.isSupported = function (){
-  return OGVCompat.supported( 'OGVPlayer' );
+Ogvjs.isSupported = function() {
+  return OGVCompat.supported('OGVPlayer');
 };
 
 /*
@@ -581,8 +625,8 @@ Ogvjs.isSupported = function (){
    * @param  {Object} srcObj  The source object
    * @return {String}         'probably', 'maybe', or '' (empty string)
    */
-Ogvjs.canPlaySource = function (srcObj) {
-    return (srcObj.type.indexOf( '/ogg' ) !== -1 ) ? 'maybe' : '';
+Ogvjs.canPlaySource = function(srcObj) {
+  return (srcObj.type.indexOf('/ogg') !== -1) ? 'maybe' : '';
 };
 
 /*
@@ -592,7 +636,7 @@ Ogvjs.canPlaySource = function (srcObj) {
  *
  * @return {Boolean}
  */
-Ogvjs.canControlVolume = function (){
+Ogvjs.canControlVolume = function() {
   return false;
 };
 
@@ -601,7 +645,7 @@ Ogvjs.canControlVolume = function (){
  *
  * @return {Number} [description]
  */
-Ogvjs.canControlPlaybackRate = function (){
+Ogvjs.canControlPlaybackRate = function() {
   return false;
 };
 
@@ -650,44 +694,46 @@ Ogvjs.Events = [
  *
  * @type {Boolean}
  */
-Ogvjs.prototype['featuresVolumeControl'] = Ogvjs.canControlVolume();
+Ogvjs.prototype.featuresVolumeControl = Ogvjs.canControlVolume();
 
 /*
  * Set the tech's playbackRate support status
  *
  * @type {Boolean}
  */
-Ogvjs.prototype['featuresPlaybackRate'] = Ogvjs.canControlPlaybackRate();
+Ogvjs.prototype.featuresPlaybackRate = Ogvjs.canControlPlaybackRate();
 
 /*
  * Set the the tech's fullscreen resize support status.
  * HTML video is able to automatically resize when going to fullscreen.
  * (No longer appears to be used. Can probably be removed.)
  */
-Ogvjs.prototype['featuresFullscreenResize'] = true;
+Ogvjs.prototype.featuresFullscreenResize = true;
 
 /*
  * Set the tech's progress event support status
  * (this disables the manual progress events of the Tech)
  */
-Ogvjs.prototype['featuresProgressEvents'] = true;
+Ogvjs.prototype.featuresProgressEvents = true;
 
 /*
  * Sets the tech's status on native text track support
  *
  * @type {Boolean}
  */
-Ogvjs.prototype['featuresNativeTextTracks'] = Ogvjs.supportsNativeTextTracks();
+Ogvjs.prototype.featuresNativeTextTracks = Ogvjs.supportsNativeTextTracks();
 
-Ogvjs.disposeMediaElement = function(el){
-  if (!el) { return; }
+Ogvjs.disposeMediaElement = function(el) {
+  if (!el) {
+    return;
+  }
 
   if (el.parentNode) {
     el.parentNode.removeChild(el);
   }
 
   // remove any child track or source nodes to prevent their loading
-  while(el.hasChildNodes()) {
+  while (el.hasChildNodes()) {
     el.removeChild(el.firstChild);
   }
 
