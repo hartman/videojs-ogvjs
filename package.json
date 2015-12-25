@@ -3,7 +3,7 @@
   "description": "A Video.js Tech plugin for Ogv.js",
   "author": "Derk-Jan Hartman",
   "license": "(MIT OR Apache-2.0)",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "es5/plugin.js",
   "keywords": [
     "videojs",
