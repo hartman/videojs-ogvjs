@@ -40,8 +40,9 @@ class Ogvjs extends Tech {
     let options = this.options_;
 
     if (options.base) {
-      // set the base, get this from options
-      OGVLoader.base = '/ogv.js';
+      OGVLoader.base = options.base;
+    } else {
+      throw new Error('Please specify the base for the ogv.js library');
     }
 
     let el = new OGVPlayer(options);
