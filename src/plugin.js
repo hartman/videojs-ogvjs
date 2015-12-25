@@ -275,7 +275,7 @@ class Ogvjs extends Tech {
    * @method src
    */
   src(src) {
-    if (src === undefined) {
+    if (typeof src === 'undefined') {
       return this.el_.src;
     }
     // Setting src through `src` instead of `setSrc` will be deprecated
@@ -670,7 +670,7 @@ Ogvjs.disposeMediaElement = function(el) {
       } catch (e) {
         // not supported
       }
-    })();
+    }());
   }
 };
 
