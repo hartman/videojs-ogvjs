@@ -1,12 +1,12 @@
-import document from 'global/document';
+// import document from 'global/document';
 
 import QUnit from 'qunit';
 import sinon from 'sinon';
 import videojs from 'video.js';
 
-import plugin from '../src/plugin';
+// import plugin from '../src/plugin';
 
-const Player = videojs.getComponent('Player');
+// const Player = videojs.getComponent('Player');
 
 QUnit.test('the environment is sane', function(assert) {
   assert.strictEqual(typeof Array.isArray, 'function', 'es5 exists');
