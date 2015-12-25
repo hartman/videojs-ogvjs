@@ -59,9 +59,9 @@
     "test:firefox": "npm run pretest && karma start test/karma/firefox.js",
     "test:ie": "npm run pretest && karma start test/karma/ie.js",
     "test:safari": "npm run pretest && karma start test/karma/safari.js",
-    "preversion": "./scripts/npm-preversion.sh",
-    "version": "./scripts/npm-version.sh",
-    "postversion": "./scripts/npm-postversion.sh",
+    "preversion": "./scripts/npm-preversion-for-bower.sh",
+    "version": "./scripts/npm-version-for-bower.sh",
+    "postversion": "./scripts/npm-postversion-for-bower.sh",
     "watch": "npm run mkdirs && npm-run-all -p watch:*",
     "watch:js": "watchify src/plugin.js -t babelify -v -o dist/videojs-ogvjs.js",
     "watch:test": "watchify `find test -name '*.test.js'` -t babelify -o dist-test/videojs-ogvjs.js"
