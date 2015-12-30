@@ -37,6 +37,20 @@
       "scripts"
     ]
   },
+  "files": [
+    "dist/",
+    "dist-test/",
+    "es5/",
+    "ogv.js/",
+    "scripts/",
+    "src/",
+    "test/",
+    "index.html",
+    "example.html",
+    "CONTRIBUTING.md",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "prebuild": "npm run clean",
     "build": "npm-run-all -p build:*",
@@ -62,6 +76,7 @@
     "preversion": "./scripts/npm-preversion-for-bower.sh",
     "version": "./scripts/npm-version-for-bower.sh",
     "postversion": "./scripts/npm-postversion-for-bower.sh",
+    "prerelease": "npm-run-all build",
     "watch": "npm run mkdirs && npm-run-all -p watch:*",
     "watch:js": "watchify src/plugin.js -t babelify -v -o dist/videojs-ogvjs.js",
     "watch:test": "watchify `find test -name '*.test.js'` -t babelify -o dist-test/videojs-ogvjs.js"
