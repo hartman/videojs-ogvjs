@@ -17,6 +17,13 @@ class Ogvjs extends Tech {
   constructor(options, ready) {
     super(options, ready);
 
+    // Set initial state of player
+    this.el_.src = options.source.src;
+    Ogvjs.setIfAvailable(this.el_, 'autoplay', options.autoplay);
+    Ogvjs.setIfAvailable(this.el_, 'loop', options.loop);
+    Ogvjs.setIfAvailable(this.el_, 'poster', options.poster);
+    Ogvjs.setIfAvailable(this.el_, 'preload', options.preload);
+
     this.triggerReady();
   }
 
@@ -26,7 +33,7 @@ class Ogvjs extends Tech {
    * @method dispose
    */
   dispose() {
-    // Ogvjs.disposeMediaElement(this.el_);
+    this.el_.removeEventListener('framecallback', this.onFrameUpdate);
     super.dispose();
   }
 
@@ -47,12 +54,15 @@ class Ogvjs extends Tech {
 
     let el = new OGVPlayer(options);
 
-    // simulate timeupdate events, needed for subtitles
-    // @todo switch this to native timeupdate event when available upstream
-    this.lastTime = 0;
-    el.addEventListener('framecallback', this.onFrameUpdate.bind(this));
-    el.src = this.options_.source.src;
+    if (!el.hasOwnProperty('preload')) {
+      // simulate timeupdate events for older ogv.js versions pre 1.1 versions
+      // needed for subtitles. preload is only defined in 1.1 and later,
+      this.lastTime = 0;
+      el.addEventListener('framecallback', this.onFrameUpdate.bind(this));
+    }
+
     el.className += ' vjs-tech';
+    options.tag = el;
 
     return el;
   }
@@ -150,7 +160,7 @@ class Ogvjs extends Tech {
    * @method volume
    */
   volume() {
-    return this.el_.volume ? this.el_.volume : 1;
+    return this.el_.hasOwnProperty('volume') ? this.el_.volume : 1;
   }
 
   /**
@@ -160,7 +170,7 @@ class Ogvjs extends Tech {
    * @method setVolume
    */
   setVolume(percentAsDecimal) {
-    if (this.el_.volume) {
+    if (this.el_.hasOwnProperty('volume')) {
       this.el_.volume = percentAsDecimal;
     }
   }
@@ -172,7 +182,7 @@ class Ogvjs extends Tech {
    * @method muted
    */
   muted() {
-    return this.el_.muted ? this.el_.muted : false;
+    return this.el_.muted;
   }
 
   /**
@@ -182,9 +192,7 @@ class Ogvjs extends Tech {
    * @method setMuted
    */
   setMuted(muted) {
-    if (this.el_.muted) {
-      this.el_.muted = muted;
-    }
+    this.el_.muted = !!muted;
   }
 
   /**
@@ -205,67 +213,6 @@ class Ogvjs extends Tech {
    */
   height() {
     return this.el_.offsetHeight;
-  }
-
-  /**
-   * Get if there is fullscreen support
-   *
-   * @return {Boolean}
-   * @method supportsFullScreen
-   */
-  supportsFullScreen() {
-    if (typeof this.el_.webkitEnterFullScreen === 'function') {
-      let userAgent = window.navigator.userAgent;
-
-      // Seems to be broken in Chromium/Chrome && Safari in Leopard
-      if ((/Android/).test(userAgent) || !(/Chrome|Mac OS X 10.5/).test(userAgent)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  /**
-   * Request to enter fullscreen
-   *
-   * @method enterFullScreen
-   */
-  enterFullScreen() {
-    let video = this.el_;
-
-    if ('webkitDisplayingFullscreen' in video) {
-      this.one('webkitbeginfullscreen', function() {
-        this.one('webkitendfullscreen', function() {
-          this.trigger('fullscreenchange', { isFullscreen: false });
-        });
-
-        this.trigger('fullscreenchange', { isFullscreen: true });
-      });
-    }
-
-    if (video.paused && video.networkState <= video.HAVE_METADATA) {
-      // attempt to prime the video element for programmatic access
-      // this isn't necessary on the desktop but shouldn't hurt
-      this.el_.play();
-
-      // playing and pausing synchronously during the transition to fullscreen
-      // can get iOS ~6.1 devices into a play/pause loop
-      this.setTimeout(function() {
-        video.pause();
-        video.webkitEnterFullScreen();
-      }, 0);
-    } else {
-      video.webkitEnterFullScreen();
-    }
-  }
-
-  /**
-   * Request to exit fullscreen
-   *
-   * @method exitFullScreen
-   */
-  exitFullScreen() {
-    this.el_.webkitExitFullScreen();
   }
 
   /**
@@ -342,7 +289,9 @@ class Ogvjs extends Tech {
    * @return {String}
    * @method preload
    */
-  // preload() { return this.el_.preload; }
+  preload() {
+    return this.el_.preload || 'none';
+  }
 
   /**
    * Set preload attribute
@@ -350,59 +299,78 @@ class Ogvjs extends Tech {
    * @param {String} val Value for preload attribute
    * @method setPreload
    */
-  // setPreload(val) { this.el_.preload = val; }
+  setPreload(val) {
+    if (this.el_.hasOwnProperty('preload')) {
+      this.el_.preload = val;
+    }
+  }
 
   /**
    * Get autoplay attribute
    *
-   * @return {String}
+   * @return {Boolean}
    * @method autoplay
    */
-  // autoplay() { return this.el_.autoplay; }
+  autoplay() {
+    return this.el_.autoplay || false;
+  }
 
   /**
    * Set autoplay attribute
    *
-   * @param {String} val Value for preload attribute
+   * @param {Boolean} val Value for preload attribute
    * @method setAutoplay
    */
-  // setAutoplay(val) { this.el_.autoplay = val; }
+  setAutoplay(val) {
+    if (this.el_.hasOwnProperty('autoplay')) {
+      this.el_.autoplay = !!val;
+      return;
+    }
+  }
 
   /**
    * Get controls attribute
    *
-   * @return {String}
+   * @return {Boolean}
    * @method controls
    */
   controls() {
-    return this.el_.controls;
+    return this.el_controls || false;
   }
 
   /**
    * Set controls attribute
    *
-   * @param {String} val Value for controls attribute
+   * @param {Boolean} val Value for controls attribute
    * @method setControls
    */
   setControls(val) {
-    this.el_.controls = !!val;
+    if (this.el_.hasOwnProperty('controls')) {
+      this.el_.controls = !!val;
+    }
   }
 
   /**
    * Get loop attribute
    *
-   * @return {String}
+   * @return {Boolean}
    * @method loop
    */
-  // loop() { return this.el_.loop; }
+  loop() {
+    return this.el_.loop || false;
+  }
 
   /**
    * Set loop attribute
    *
-   * @param {String} val Value for loop attribute
+   * @param {Boolean} val Value for loop attribute
    * @method setLoop
    */
-  // setLoop(val) { this.el_.loop = val; }
+  setLoop(val) {
+    if (this.el_.hasOwnProperty('loop')) {
+      this.el_.loop = !!val;
+    }
+  }
 
   /**
    * Get error value
@@ -454,7 +422,9 @@ class Ogvjs extends Tech {
    * @return {Boolean}
    * @method defaultMuted
    */
-  // defaultMuted() { return this.el_.defaultMuted; }
+  defaultMuted() {
+    return this.el_.defaultMuted || false;
+  }
 
   /**
    * Get desired speed at which the media resource is to play
@@ -462,7 +432,9 @@ class Ogvjs extends Tech {
    * @return {Number}
    * @method playbackRate
    */
-  // playbackRate() { return this.el_.playbackRate; }
+  playbackRate() {
+    return this.el_.playbackRate || 1;
+  }
 
   /**
    * Returns a TimeRanges object that represents the ranges of the
@@ -471,7 +443,9 @@ class Ogvjs extends Tech {
    * timeline that has been reached through normal playback
    * @see https://html.spec.whatwg.org/multipage/embedded-content.html#dom-media-played
    */
-  // played() { return this.el_.played; }
+  played() {
+    return this.el_.played;
+  }
 
   /**
    * Set desired speed at which the media resource is to play
@@ -479,7 +453,11 @@ class Ogvjs extends Tech {
    * @param {Number} val Speed at which the media resource is to play
    * @method setPlaybackRate
    */
-  // setPlaybackRate(val) { this.el_.playbackRate = val; }
+  setPlaybackRate(val) {
+    if (this.el_.hasOwnProperty('playbackRate')) {
+      this.el_.playbackRate = val;
+    }
+  }
 
   /**
    * Get the current state of network activity for the element, from
@@ -492,7 +470,9 @@ class Ogvjs extends Tech {
    * @return {Number}
    * @method networkState
    */
-  // networkState() { return this.el_.networkState; }
+  networkState() {
+    return this.el_.networkState;
+  }
 
   /**
    * Get a value that expresses the current state of the element
@@ -507,7 +487,9 @@ class Ogvjs extends Tech {
    * @return {Number}
    * @method readyState
    */
-  // readyState() { return this.el_.readyState; }
+  readyState() {
+    return this.el_.readyState;
+  }
 
   /**
    * Get width of video
@@ -530,6 +512,19 @@ class Ogvjs extends Tech {
   }
 
 }
+
+/*
+ * Only set a value on an element if it has that property
+ *
+ * @param {Element} el
+ * @param {String} name
+ * @param value
+ */
+Ogvjs.setIfAvailable = function(el, name, value) {
+  if (el.hasOwnProperty(name)) {
+    el[name] = value;
+  }
+};
 
 /*
  * Check if Ogvjs video is supported by this browser/device
@@ -557,7 +552,9 @@ Ogvjs.canPlaySource = function(srcObj) {
  * @return {Boolean}
  */
 Ogvjs.canControlVolume = function() {
-  return false;
+  let p = new OGVPlayer();
+
+  return p.hasOwnProperty('volume');
 };
 
 /*
@@ -642,38 +639,6 @@ Ogvjs.prototype.featuresProgressEvents = true;
  * @type {Boolean}
  */
 Ogvjs.prototype.featuresNativeTextTracks = Ogvjs.supportsNativeTextTracks();
-
-Ogvjs.disposeMediaElement = function(el) {
-  if (!el) {
-    return;
-  }
-
-  if (el.parentNode) {
-    el.parentNode.removeChild(el);
-  }
-
-  // remove any child track or source nodes to prevent their loading
-  while (el.hasChildNodes()) {
-    el.removeChild(el.firstChild);
-  }
-
-  // remove any src reference. not setting `src=''` because that causes a warning
-  // in firefox
-  el.removeAttribute('src');
-
-  // force the media element to update its loading state by calling load()
-  // however IE on Windows 7N has a bug that throws an error so need a try/catch (#793)
-  if (typeof el.load === 'function') {
-    // wrapping in an iife so it's not deoptimized (#1060#discussion_r10324473)
-    (function() {
-      try {
-        el.load();
-      } catch (e) {
-        // not supported
-      }
-    }());
-  }
-};
 
 Tech.registerTech('Ogvjs', Ogvjs);
 export default Ogvjs;
