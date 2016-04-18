@@ -10,7 +10,7 @@ Many thanks to the great work of the Video.js developers and to Brion Vibber for
 
 ## Demo
 
-Try out [the demo](https://cdn.rawgit.com/hartman/videojs-ogvjs/v1.0.4/example.html) !!
+Try out [the demo](https://cdn.rawgit.com/hartman/videojs-ogvjs/v1.1.0/example.html) !!
 
 ## License
 
