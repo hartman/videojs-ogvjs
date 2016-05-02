@@ -92,7 +92,7 @@
     "watch:test": "watchify `find test -name '*.test.js'` -t babelify -o dist-test/videojs-ogvjs.js"
   },
   "dependencies": {
-    "video.js": "^5.8.8"
+    "video.js": "^5.9.2"
   },
   "devDependencies": {
     "babel": "^5.8.0",
