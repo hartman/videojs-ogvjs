@@ -14,14 +14,14 @@
   </ul>
   The above video is an Instant Folgers commercial and free from copyright restrictions, as it is in the <a href="https://archive.org/details/FolgersCoffe">Public Domain</a>. Video hosted by <a href="https://commons.wikimedia.org/wiki/File:Folgers.ogv">Wikimedia Commons</a>.
   <script src="/node_modules/video.js/dist/video.js"></script>
-  <script src="/ogv.js/ogv-support.js"></script>
-  <script src="/ogv.js/ogv.js"></script>
+  <script src="/node_modules/ogv/dist/ogv-support.js"></script>
+  <script src="/node_modules/ogv/dist/ogv.js"></script>
   <script src="/dist/videojs-ogvjs.js"></script>
   <script>
     (function(window, videojs) {
       var player = videojs('videojs-ogvjs-player', {
         techOrder: [ 'ogvjs' ],
-        ogvjs: { base: '/ogv.js' }
+        ogvjs: { base: '/node_modules/ogv/dist' }
       } );
     }(window, window.videojs));
   </script>
