@@ -42,7 +42,6 @@
       "dist-test",
       "docs",
       "es5",
-      "ogv.js",
       "test/karma",
       "scripts"
     ]
@@ -51,7 +50,6 @@
     "dist/",
     "dist-test/",
     "es5/",
-    "ogv.js/",
     "scripts/",
     "src/",
     "test/",
@@ -92,6 +90,7 @@
     "watch:test": "watchify `find test -name '*.test.js'` -t babelify -o dist-test/videojs-ogvjs.js"
   },
   "dependencies": {
+    "ogv": "^1.1.0-alpha.0",
     "video.js": "^5.8.8"
   },
   "devDependencies": {
