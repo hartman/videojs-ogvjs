@@ -7,7 +7,17 @@
   "main": "es5/plugin.js",
   "keywords": [
     "videojs",
-    "videojs-plugin"
+    "videojs-plugin",
+    "ogv",
+    "ogvjs",
+    "ogv.js",
+    "ogg",
+    "vorbis",
+    "webm",
+    "opus",
+    "video",
+    "audio",
+    "techplugin"
   ],
   "repository": {
     "type": "git",
