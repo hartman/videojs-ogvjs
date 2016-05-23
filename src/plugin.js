@@ -536,12 +536,23 @@ Ogvjs.isSupported = function() {
 };
 
 /*
-   * Check if the tech can support the given source
-   * @param  {Object} srcObj  The source object
-   * @return {String}         'probably', 'maybe', or '' (empty string)
-   */
+ * Determine if the specified media type can be played back
+ * by the Tech
+ *
+ * @param  {String} type  A media type description
+ * @return {String}         'probably', 'maybe', or '' (empty string)
+ */
+Ogvjs.canPlayType = function(type) {
+  return (type.indexOf('/ogg') !== -1) ? 'maybe' : '';
+};
+
+/*
+ * Check if the tech can support the given source
+ * @param  {Object} srcObj  The source object
+ * @return {String}         'probably', 'maybe', or '' (empty string)
+ */
 Ogvjs.canPlaySource = function(srcObj) {
-  return (srcObj.type.indexOf('/ogg') !== -1) ? 'maybe' : '';
+  return Ogvjs.canPlayType(srcObj.type);
 };
 
 /*
