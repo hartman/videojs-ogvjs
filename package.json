@@ -4,7 +4,7 @@
   "author": "Derk-Jan Hartman",
   "license": "(MIT OR Apache-2.0)",
   "version": "1.2.0",
-  "main": "es5/plugin.js",
+  "main": "src/plugin.js",
   "keywords": [
     "videojs",
     "videojs-plugin",
