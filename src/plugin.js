@@ -517,7 +517,11 @@ class Ogvjs extends Tech {
    * fullWindow mode due to lack of HTML5 fullscreen api
    */
   supportsFullScreen() {
-    return false;
+    if ( navigator.userAgent.match(/iPhone|iPad|iPod Touch/) ) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
 }
