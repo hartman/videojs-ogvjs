@@ -511,6 +511,15 @@ class Ogvjs extends Tech {
     return this.el_.videoHeight;
   }
 
+  /**
+   * The technology has no native fullscreen
+   * This is important on iOS, where we have to fallback to
+   * fullWindow mode due to lack of HTML5 fullscreen api
+   */
+  supportsFullScreen() {
+    return false;
+  }
+
 }
 
 /*
