@@ -1,6 +1,6 @@
 # videojs-ogvjs
 
-[![Current version](https://img.shields.io/npm/v/videojs-ogvjs.svg)](https://www.npmjs.com/package/videojs-ogvjs) [![Dependencies](https://img.shields.io/versioneye/d/nodejs/videojs-ogvjs.svg)](https://www.versioneye.com/nodejs/videojs-ogvjs) [![Build Status](https://travis-ci.org/hartman/videojs-ogvjs.svg?branch=master)](https://travis-ci.org/hartman/videojs-ogvjs)
+[![Current version](https://img.shields.io/npm/v/videojs-ogvjs.svg)](https://www.npmjs.com/package/videojs-ogvjs) [![Dependencies](https://david-dm.org/hartman/videojs-ogvjs.svg)](https://david-dm.org/hartman/videojs-ogvjs) [![Build Status](https://travis-ci.org/hartman/videojs-ogvjs.svg?branch=master)](https://travis-ci.org/hartman/videojs-ogvjs)
 
 A [Video.js](https://www.videojs.com) Tech plugin for [Ogv.js](https://github.com/brion/ogv.js/).
 
