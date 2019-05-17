@@ -1,8 +1,8 @@
 import videojs from 'video.js';
-import OGVCompat from 'OGVCompat';
-import OGVLoader from 'OGVLoader';
-import OGVPlayer from 'OGVPlayer';
-const Tech = videojs.getComponent('Tech');
+import ogv from 'ogv';
+import {version as VERSION} from '../package.json';
+
+const Tech = videojs.getTech('Tech');
 
 /**
  * Ogvjs Media Controller - Wrapper for Ogvjs Media API
@@ -47,12 +47,12 @@ class Ogvjs extends Tech {
     let options = this.options_;
 
     if (options.base) {
-      OGVLoader.base = options.base;
+      ogv.OGVLoader.base = options.base;
     } else {
       throw new Error('Please specify the base for the ogv.js library');
     }
 
-    let el = new OGVPlayer(options);
+    let el = new ogv.OGVPlayer(options);
 
     if (!el.hasOwnProperty('preload')) {
       // simulate timeupdate events for older ogv.js versions pre 1.1 versions
@@ -541,7 +541,7 @@ Ogvjs.setIfAvailable = function(el, name, value) {
  * @return {Boolean}
  */
 Ogvjs.isSupported = function() {
-  return OGVCompat.supported('OGVPlayer');
+  return ogv.OGVCompat.supported('OGVPlayer');
 };
 
 /*
@@ -572,7 +572,7 @@ Ogvjs.canPlaySource = function(srcObj) {
  * @return {Boolean}
  */
 Ogvjs.canControlVolume = function() {
-  let p = new OGVPlayer();
+  let p = new ogv.OGVPlayer();
 
   return p.hasOwnProperty('volume');
 };
@@ -660,6 +660,11 @@ Ogvjs.prototype.featuresProgressEvents = true;
  */
 Ogvjs.prototype.featuresNativeTextTracks = Ogvjs.supportsNativeTextTracks();
 
+// Define default values for the plugin's `state` object here.
+Ogvjs.defaultState = {};
+
+// Include the version number.
+Ogvjs.VERSION = VERSION;
+
 Tech.registerTech('Ogvjs', Ogvjs);
 export default Ogvjs;
-

@@ -6,7 +6,7 @@ import videojs from 'video.js';
 
 import plugin from '../src/plugin';
 
-// const Player = videojs.getComponent('Player');
+const Player = videojs.getComponent('Player');
 
 QUnit.test('the environment is sane', function(assert) {
   assert.strictEqual(typeof Array.isArray, 'function', 'es5 exists');
@@ -31,6 +31,7 @@ QUnit.module('videojs-ogvjs', {
     this.source.setAttribute('src', 'https://upload.wikimedia.org/wikipedia/commons/9/94/Folgers.ogv');
     this.source.setAttribute('type', 'video/ogg');
     this.video.appendChild(this.source);
+
     this.fixture.appendChild(this.video);
     this.player = videojs(this.video, {
       techOrder: [ 'ogvjs' ],
@@ -59,7 +60,7 @@ QUnit.test('registers itself with video.js', function(assert) {
   );
 
   assert.ok(
-    videojs.hasClass(
+    videojs.dom.hasClass(
       this.player.tech({ IWillNotUseThisInPlugins: true}).el(),
       'vjs-tech'
     ),

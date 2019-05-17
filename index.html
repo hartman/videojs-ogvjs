@@ -3,20 +3,18 @@
 <head>
   <meta charset="utf-8">
   <title>videojs-ogvjs Demo</title>
-  <link href="/node_modules/video.js/dist/video-js.css" rel="stylesheet">
+  <link href="node_modules/video.js/dist/video-js.css" rel="stylesheet">
+
 </head>
 <body>
   <video id="videojs-ogvjs-player" class="video-js vjs-default-skin" poster="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Folgers.ogv/352px--Folgers.ogv.jpg" controls preload="none" width="352" height="264" crossorigin>
     <source src="https://upload.wikimedia.org/wikipedia/commons/9/94/Folgers.ogv" type='video/ogg; codecs=&quot;theora, vorbis&quot;'>
   </video>
   <ul>
-    <li><a href="/test/">Run unit tests in browser.</a></li>
+    <li><a href="/test/debug.html">Run unit tests in browser.</a></li>
   </ul>
-  The above video is an Instant Folgers commercial and free from copyright restrictions, as it is in the <a href="https://archive.org/details/FolgersCoffe">Public Domain</a>. Video hosted by <a href="https://commons.wikimedia.org/wiki/File:Folgers.ogv">Wikimedia Commons</a>.
-  <script src="/node_modules/video.js/dist/video.js"></script>
-  <script src="/node_modules/ogv/dist/ogv-support.js"></script>
-  <script src="/node_modules/ogv/dist/ogv.js"></script>
-  <script src="/dist/videojs-ogvjs.js"></script>
+  <script src="node_modules/video.js/dist/video.js"></script>
+  <script src="dist/videojs-ogvjs.js"></script>
   <script>
     (function(window, videojs) {
       var player = videojs('videojs-ogvjs-player', {
