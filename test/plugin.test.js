@@ -6,7 +6,7 @@ import videojs from 'video.js';
 
 import plugin from '../src/plugin';
 
-const Player = videojs.getComponent('Player');
+// const Player = videojs.getComponent('Player');
 
 QUnit.test('the environment is sane', function(assert) {
   assert.strictEqual(typeof Array.isArray, 'function', 'es5 exists');

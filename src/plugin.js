@@ -44,7 +44,7 @@ class Ogvjs extends Tech {
    * @method createEl
    */
   createEl() {
-    let options = this.options_;
+    const options = this.options_;
 
     if (options.base) {
       ogv.OGVLoader.base = options.base;
@@ -52,7 +52,7 @@ class Ogvjs extends Tech {
       throw new Error('Please specify the base for the ogv.js library');
     }
 
-    let el = new ogv.OGVPlayer(options);
+    const el = new ogv.OGVPlayer(options);
 
     if (!el.hasOwnProperty('preload')) {
       // simulate timeupdate events for older ogv.js versions pre 1.1 versions
@@ -68,8 +68,8 @@ class Ogvjs extends Tech {
   }
 
   onFrameUpdate(event) {
-    let timeupdateInterval = 0.25;
-    let now = this.el_ ? this.el_.currentTime : this.lastTime;
+    const timeupdateInterval = 0.25;
+    const now = this.el_ ? this.el_.currentTime : this.lastTime;
 
     // Don't spam time updates on every frame
     if (Math.abs(now - this.lastTime) >= timeupdateInterval) {
@@ -572,7 +572,7 @@ Ogvjs.canPlaySource = function(srcObj) {
  * @return {Boolean}
  */
 Ogvjs.canControlVolume = function() {
-  let p = new ogv.OGVPlayer();
+  const p = new ogv.OGVPlayer();
 
   return p.hasOwnProperty('volume');
 };
