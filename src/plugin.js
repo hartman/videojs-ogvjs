@@ -2,6 +2,8 @@ import videojs from 'video.js';
 import OGVCompat from 'OGVCompat';
 import OGVLoader from 'OGVLoader';
 import OGVPlayer from 'OGVPlayer';
+import {version as VERSION} from '../package.json';
+
 const Tech = videojs.getComponent('Tech');
 
 /**
@@ -189,7 +191,7 @@ class Ogvjs extends Tech {
   /**
    * Set muted
    *
-   * @param {boolean} If player is to be muted or note
+   * @param {boolean} muted If player is to be muted or note
    * @method setMuted
    */
   setMuted(muted) {
@@ -664,6 +666,10 @@ Ogvjs.prototype.featuresProgressEvents = true;
  */
 Ogvjs.prototype.featuresNativeTextTracks = Ogvjs.supportsNativeTextTracks();
 
+// Include the version number.
+Ogvjs.VERSION = VERSION;
+
 Tech.registerTech('Ogvjs', Ogvjs);
+
 export default Ogvjs;
 
