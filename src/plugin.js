@@ -45,7 +45,7 @@ class Ogvjs extends Tech {
    * @method createEl
    */
   createEl() {
-    let options = this.options_;
+    const options = this.options_;
 
     if (options.base) {
       OGVLoader.base = options.base;
@@ -53,7 +53,7 @@ class Ogvjs extends Tech {
       throw new Error('Please specify the base for the ogv.js library');
     }
 
-    let el = new OGVPlayer(options);
+    const el = new OGVPlayer(options);
 
     if (!el.hasOwnProperty('preload')) {
       // simulate timeupdate events for older ogv.js versions pre 1.1 versions
@@ -69,8 +69,8 @@ class Ogvjs extends Tech {
   }
 
   onFrameUpdate(event) {
-    let timeupdateInterval = 0.25;
-    let now = this.el_ ? this.el_.currentTime : this.lastTime;
+    const timeupdateInterval = 0.25;
+    const now = this.el_ ? this.el_.currentTime : this.lastTime;
 
     // Don't spam time updates on every frame
     if (Math.abs(now - this.lastTime) >= timeupdateInterval) {
@@ -101,7 +101,7 @@ class Ogvjs extends Tech {
   /**
    * Paused for Ogvjs tech
    *
-   * @return {Boolean}
+   * @return {boolean}
    * @method paused
    */
   paused() {
@@ -111,7 +111,7 @@ class Ogvjs extends Tech {
   /**
    * Get current time
    *
-   * @return {Number}
+   * @return {number}
    * @method currentTime
    */
   currentTime() {
@@ -121,7 +121,7 @@ class Ogvjs extends Tech {
   /**
    * Set current time
    *
-   * @param {Number} seconds Current time of video
+   * @param {number} seconds Current time of video
    * @method setCurrentTime
    */
   setCurrentTime(seconds) {
@@ -135,7 +135,7 @@ class Ogvjs extends Tech {
   /**
    * Get duration
    *
-   * @return {Number}
+   * @return {number}
    * @method duration
    */
   duration() {
@@ -157,7 +157,7 @@ class Ogvjs extends Tech {
   /**
    * Get volume level
    *
-   * @return {Number}
+   * @return {number}
    * @method volume
    */
   volume() {
@@ -167,7 +167,7 @@ class Ogvjs extends Tech {
   /**
    * Set volume level
    *
-   * @param {Number} percentAsDecimal Volume percent as a decimal
+   * @param {number} percentAsDecimal Volume percent as a decimal
    * @method setVolume
    */
   setVolume(percentAsDecimal) {
@@ -179,7 +179,7 @@ class Ogvjs extends Tech {
   /**
    * Get if muted
    *
-   * @return {Boolean}
+   * @return {boolean}
    * @method muted
    */
   muted() {
@@ -189,7 +189,7 @@ class Ogvjs extends Tech {
   /**
    * Set muted
    *
-   * @param {Boolean} If player is to be muted or note
+   * @param {boolean} If player is to be muted or note
    * @method setMuted
    */
   setMuted(muted) {
@@ -199,7 +199,7 @@ class Ogvjs extends Tech {
   /**
    * Get player width
    *
-   * @return {Number}
+   * @return {number}
    * @method width
    */
   width() {
@@ -209,7 +209,7 @@ class Ogvjs extends Tech {
   /**
    * Get player height
    *
-   * @return {Number}
+   * @return {number}
    * @method height
    */
   height() {
@@ -267,7 +267,7 @@ class Ogvjs extends Tech {
   /**
    * Get poster
    *
-   * @return {String}
+   * @return {string}
    * @method poster
    */
   poster() {
@@ -277,7 +277,7 @@ class Ogvjs extends Tech {
   /**
    * Set poster
    *
-   * @param {String} val URL to poster image
+   * @param {string} val URL to poster image
    * @method
    */
   setPoster(val) {
@@ -287,7 +287,7 @@ class Ogvjs extends Tech {
   /**
    * Get preload attribute
    *
-   * @return {String}
+   * @return {string}
    * @method preload
    */
   preload() {
@@ -297,7 +297,7 @@ class Ogvjs extends Tech {
   /**
    * Set preload attribute
    *
-   * @param {String} val Value for preload attribute
+   * @param {string} val Value for preload attribute
    * @method setPreload
    */
   setPreload(val) {
@@ -309,7 +309,7 @@ class Ogvjs extends Tech {
   /**
    * Get autoplay attribute
    *
-   * @return {Boolean}
+   * @return {boolean}
    * @method autoplay
    */
   autoplay() {
@@ -319,7 +319,7 @@ class Ogvjs extends Tech {
   /**
    * Set autoplay attribute
    *
-   * @param {Boolean} val Value for preload attribute
+   * @param {boolean} val Value for preload attribute
    * @method setAutoplay
    */
   setAutoplay(val) {
@@ -332,7 +332,7 @@ class Ogvjs extends Tech {
   /**
    * Get controls attribute
    *
-   * @return {Boolean}
+   * @return {boolean}
    * @method controls
    */
   controls() {
@@ -342,7 +342,7 @@ class Ogvjs extends Tech {
   /**
    * Set controls attribute
    *
-   * @param {Boolean} val Value for controls attribute
+   * @param {boolean} val Value for controls attribute
    * @method setControls
    */
   setControls(val) {
@@ -354,7 +354,7 @@ class Ogvjs extends Tech {
   /**
    * Get loop attribute
    *
-   * @return {Boolean}
+   * @return {boolean}
    * @method loop
    */
   loop() {
@@ -364,7 +364,7 @@ class Ogvjs extends Tech {
   /**
    * Set loop attribute
    *
-   * @param {Boolean} val Value for loop attribute
+   * @param {boolean} val Value for loop attribute
    * @method setLoop
    */
   setLoop(val) {
@@ -376,7 +376,7 @@ class Ogvjs extends Tech {
   /**
    * Get error value
    *
-   * @return {String}
+   * @return {string}
    * @method error
    */
   error() {
@@ -386,7 +386,7 @@ class Ogvjs extends Tech {
   /**
    * Get whether or not the player is in the "seeking" state
    *
-   * @return {Boolean}
+   * @return {boolean}
    * @method seeking
    */
   seeking() {
@@ -408,7 +408,7 @@ class Ogvjs extends Tech {
   /**
    * Get if video ended
    *
-   * @return {Boolean}
+   * @return {boolean}
    * @method ended
    */
   ended() {
@@ -420,7 +420,7 @@ class Ogvjs extends Tech {
    * This attribute has no dynamic effect, it only
    * controls the default state of the element
    *
-   * @return {Boolean}
+   * @return {boolean}
    * @method defaultMuted
    */
   defaultMuted() {
@@ -430,7 +430,7 @@ class Ogvjs extends Tech {
   /**
    * Get desired speed at which the media resource is to play
    *
-   * @return {Number}
+   * @return {number}
    * @method playbackRate
    */
   playbackRate() {
@@ -440,6 +440,7 @@ class Ogvjs extends Tech {
   /**
    * Returns a TimeRanges object that represents the ranges of the
    * media resource that the user agent has played.
+   *
    * @return {TimeRangeObject} the range of points on the media
    * timeline that has been reached through normal playback
    * @see https://html.spec.whatwg.org/multipage/embedded-content.html#dom-media-played
@@ -451,7 +452,7 @@ class Ogvjs extends Tech {
   /**
    * Set desired speed at which the media resource is to play
    *
-   * @param {Number} val Speed at which the media resource is to play
+   * @param {number} val Speed at which the media resource is to play
    * @method setPlaybackRate
    */
   setPlaybackRate(val) {
@@ -468,7 +469,7 @@ class Ogvjs extends Tech {
    * NETWORK_LOADING (numeric value 2)
    * NETWORK_NO_SOURCE (numeric value 3)
    *
-   * @return {Number}
+   * @return {number}
    * @method networkState
    */
   networkState() {
@@ -485,7 +486,7 @@ class Ogvjs extends Tech {
    * HAVE_FUTURE_DATA (numeric value 3)
    * HAVE_ENOUGH_DATA (numeric value 4)
    *
-   * @return {Number}
+   * @return {number}
    * @method readyState
    */
   readyState() {
@@ -495,7 +496,7 @@ class Ogvjs extends Tech {
   /**
    * Get width of video
    *
-   * @return {Number}
+   * @return {number}
    * @method videoWidth
    */
   videoWidth() {
@@ -505,7 +506,7 @@ class Ogvjs extends Tech {
   /**
    * Get height of video
    *
-   * @return {Number}
+   * @return {number}
    * @method videoHeight
    */
   videoHeight() {
@@ -527,7 +528,7 @@ class Ogvjs extends Tech {
  * Only set a value on an element if it has that property
  *
  * @param {Element} el
- * @param {String} name
+ * @param {string} name
  * @param value
  */
 Ogvjs.setIfAvailable = function(el, name, value) {
@@ -539,7 +540,7 @@ Ogvjs.setIfAvailable = function(el, name, value) {
 /*
  * Check if Ogvjs video is supported by this browser/device
  *
- * @return {Boolean}
+ * @return {boolean}
  */
 Ogvjs.isSupported = function() {
   return OGVCompat.supported('OGVPlayer');
@@ -549,17 +550,19 @@ Ogvjs.isSupported = function() {
  * Determine if the specified media type can be played back
  * by the Tech
  *
- * @param  {String} type  A media type description
- * @return {String}         'probably', 'maybe', or '' (empty string)
+ * @param  {string} type  A media type description
+ * @return {string}         'probably', 'maybe', or '' (empty string)
  */
 Ogvjs.canPlayType = function(type) {
-  return (type.indexOf('/ogg') !== -1) ? 'maybe' : '';
+  const p = new OGVPlayer();
+
+  return p.canPlayType(type);
 };
 
 /*
  * Check if the tech can support the given source
  * @param  {Object} srcObj  The source object
- * @return {String}         'probably', 'maybe', or '' (empty string)
+ * @return {string}         'probably', 'maybe', or '' (empty string)
  */
 Ogvjs.canPlaySource = function(srcObj) {
   return Ogvjs.canPlayType(srcObj.type);
@@ -570,10 +573,10 @@ Ogvjs.canPlaySource = function(srcObj) {
  * Volume cannot be changed in a lot of mobile devices.
  * Specifically, it can't be changed from 1 on iOS.
  *
- * @return {Boolean}
+ * @return {boolean}
  */
 Ogvjs.canControlVolume = function() {
-  let p = new OGVPlayer();
+  const p = new OGVPlayer();
 
   return p.hasOwnProperty('volume');
 };
@@ -581,7 +584,7 @@ Ogvjs.canControlVolume = function() {
 /*
  * Check if playbackRate is supported in this browser/device.
  *
- * @return {Number} [description]
+ * @return {number} [description]
  */
 Ogvjs.canControlPlaybackRate = function() {
   return false;
@@ -590,7 +593,7 @@ Ogvjs.canControlPlaybackRate = function() {
 /*
  * Check to see if native text tracks are supported by this browser/device
  *
- * @return {Boolean}
+ * @return {boolean}
  */
 Ogvjs.supportsNativeTextTracks = function() {
   return false;
@@ -630,14 +633,14 @@ Ogvjs.Events = [
 /*
  * Set the tech's volume control support status
  *
- * @type {Boolean}
+ * @type {boolean}
  */
 Ogvjs.prototype.featuresVolumeControl = Ogvjs.canControlVolume();
 
 /*
  * Set the tech's playbackRate support status
  *
- * @type {Boolean}
+ * @type {boolean}
  */
 Ogvjs.prototype.featuresPlaybackRate = Ogvjs.canControlPlaybackRate();
 
@@ -657,7 +660,7 @@ Ogvjs.prototype.featuresProgressEvents = true;
 /*
  * Sets the tech's status on native text track support
  *
- * @type {Boolean}
+ * @type {boolean}
  */
 Ogvjs.prototype.featuresNativeTextTracks = Ogvjs.supportsNativeTextTracks();
 
