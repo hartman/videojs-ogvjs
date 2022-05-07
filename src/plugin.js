@@ -21,7 +21,7 @@ class Ogvjs extends Tech {
     this.el_.src = options.source.src;
     Ogvjs.setIfAvailable(this.el_, 'autoplay', options.autoplay);
     Ogvjs.setIfAvailable(this.el_, 'loop', options.loop);
-    Ogvjs.setIfAvailable(this.el_, 'muted', options.loop);
+    Ogvjs.setIfAvailable(this.el_, 'muted', options.muted);
     Ogvjs.setIfAvailable(this.el_, 'poster', options.poster);
     Ogvjs.setIfAvailable(this.el_, 'preload', options.preload);
 
